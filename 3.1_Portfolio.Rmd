@@ -1,0 +1,261 @@
+---
+title: "3.1 & 3.2: Phylogency Exercises"
+output: html_notebook
+---
+Iasha Khan
+
+In order to make trees, I will need the packages below. 
+```{r}
+install.packages(ape)
+install.packages("devtools")
+devtools::install_github("ropensci/brranching")
+library("ape")
+library("brranching")
+```
+
+# MINI EXERCISE 1: Understanding Newick and Phylo Objects
+
+```{r}
+newick_str = "(((Humans, Chimps), Gorillas), Orangs);"
+tr_primates = read.tree(text=newick_str)
+plot(tr_primates)
+```
+#Command function
+
+With the tr_primates command, I am given the tip labels.
+
+With the str("tr_primates") command, I am given the name of the tree, which is tr_primates
+
+With the str(tr_primates) command, I am given information about the tree, specifically the number of tips, edges, nodes, and the class class and order.
+
+With the attributes(tr_primates) command, I am given the attributes of the tree object, which are the names (edges, node numbers, and tip labels), the class ("phylo"), and the order ("cladewise").
+
+With the names(tr_primates) command, I am given the parts of the name attribute of the tree object (edges, node numbers, and tip labels)
+
+To finish up Mini-Exercise 1, I wrote new code with a new Newick string variable, read the string using read.tree, and plotted it. The goal was to generate a four-taxon tree with a new topology. It is an erroneous tree, depicting relationships that contradict today's biological knowledge.
+
+```{r}
+new_tree = "(Blueberry, ((Watermelon, Banana), Honey Dew));"
+fruits = read.tree(text=new_tuple)
+plot(fruits)
+```
+
+# MINI-EXERCISE 2
+
+1. I wrote a new Newick tree as as string variable, read it as a tree, and ploted it. I made sure it was consistent with 2018 botanical knowledge about these four taxa.
+
+```{r}
+plant_phylogeny = "(((Peach, Tomato), Poppyseed), Wheat);"
+plant_tree = read.tree(text=plant_phylogeny)
+plot(plant_tree)
+```
+Wheat is a monocot, poopyseed is a eudicot, and both peach and tomato are core eudicots.
+
+2. To these four taxa, I added two additional taxa: radish and sequoia. For these six tip taxa, I wrote a new Newick variable, read it, and plotted it. I wrote two alternative trees: one erroneous and one correct. 
+
+Correct tree:
+```{r}
+correct = "(((((Peach, Tomato), Raddish), Poppyseed), Wheat), Sequoia);"
+correct_tree = read.tree(text=correct)
+plot(correct_tree)
+```
+
+Erroneous tree:
+```{r}
+erroneous = "(((((Peach, Tomato), Sequoia), Poppyseed), Wheat), Raddish);"
+erroneous_tree = read.tree(text=erroneous)
+plot(erroneous_tree)
+```
+
+a. Explain what's wrong in your erroneous tree and how you've corrected the error in the other tree.
+
+The erroneous tree places tells us that sequoia tree shares a more rececent common ancestor to tomato and peach than raddish does. However, our correct tree shows that this is not true. Raddish shares a more recent common ancestor to tomato and peach. In fact, sequoia is the out-group in this tree.
+
+b. Use commands such as "str" or "attribute" and comment about whether your erroneous and correct tree differ in tips, Nnodes, or edges. 
+
+```{r}
+str(correct_tree)
+attributes(correct_tree)
+str(erroneous_tree)
+attributes(erroneous_tree)
+```
+The edges, number of nodes, and attributes are the same for the two trees. But the thing that differs between the two trees is the tip labels. This makes sense because I simply just switched the position of radish and sequoia for my two trees.
+
+## MINI-EXERCISE 3
+
+In November 2017, scientists discovered that there are two Orang species, the known species Pongo abelii and the new species Pongo tapanuliensis. The two taxa are estimated to have separated about 3.5 million years ago. How would you modify the Newick portion of code above to show that there are two species? 
+See tree below.
+
+```{r}
+newick_str = "(((Humans, Chimps), Gorillas), (Pongo_abelii, Pongo_tapanuliensis));"
+tr_primates = read.tree(text=newick_str)
+plot(tr_primates)
+```
+
+#MINI EXERCISE 4
+
+Practice a few of these data display techniques using the six-taxon phylogeny that includes cabbage, kale, corn and wheat, plus radish and sequoia.
+
+```{r}
+plants_two = "(Sequoia, (Wheat,(Corn,(Cabbage, Kale, Radish))));"
+plants_two_tree = read.tree(text=plants_two)
+
+plot(plants_two_tree, type="cladogram")
+plot(plants_two_tree, type="fan")
+plot(plants_two_tree, type="unrooted")
+plot(plants_two_tree, type="radial")
+```
+
+# MINI-EXERCISE 5
+
+Do and write up notes about two things:
+
+1. Try generating these trees again, but change from cladogram to phylogram, or to another format for the tree. 
+
+```{r}
+# storing data
+EG<-c("Abies",
+"Ailanthus",
+"Aspicllum",
+"Atragene",
+"Bangia",
+"Begonia",
+"Berberis",
+"Betula",
+"Blasia",
+"Blechnum",
+"Caulerpa",
+"Ceratophyllum",
+"Chenopodium",
+"Clematis",
+"Cocculus",
+"Corallorrhiza",
+"Corchorus",
+"Cucurbita",
+"Dahlia",
+"Dioscorea",
+"Dracaena",
+"Equisetum",
+"Euonymus",
+"Euphorbia",
+"Fagus",
+"Ficus",
+"Fontinalis",
+"Fossombronia",
+"Fritillaria",
+"Fucus",
+"Gleditschia",
+"Gleocapsa",
+"Haplomitrium",
+"Hedera",
+"Helianthus",
+"Heterocentron",
+"Hippuris",
+"Hypoderma",
+"Isoetes",
+"Linum",
+"Liquidambar",
+"Marchantia",
+"Momordica",
+"Monopodium",
+"Mucor",
+"Nerium",
+"Nitella",
+"Osmunda",
+"Pandanus",
+"Papaver",
+"Pelargonium",
+"Phlomis",
+"Phytolacca",
+"Pinus",
+"Platanus",
+"Polytrichum",
+"Populus",
+"Potamogeton",
+"Punctum",
+"Quercus",
+"Ricinus",
+"Rubus",
+"Salix",
+"Sambucus",
+"Sclerotium",
+"Selaginella",
+"Sempervivum",
+"Sponia",
+"Stypocaulon",
+"Sympodium",
+"Taxodium",
+"Tecoma",
+"Tradescantia",
+"Urtica",
+"Viola",
+"Vitis",
+"Wisteria",
+"Yucca")
+
+EG_tree <- phylomatic(taxa = EG, get = 'POST')
+write.tree(EG_tree, file="eg_tree_stuff")
+# cladogram version
+plot(EG_tree, no.margin = TRUE, type="cladogram")
+# phylogram version
+plot(EG_tree, no.margin = TRUE, type="phylogram")
+```
+
+2. Then, looking at all your output, what differs most noticably between the pair of trees, and how/why does this relate to the stored tree used to generate them? Try to explain what this means in your own words. 
+Both cladograms and phylograms help to show the relationships between different organisms, but only phylograms have branches that represent evolutionary time and amount of change. Cladograms indicate common ancestry but do not indicate the amount of evolutionary "time" separating taxa.
+
+3. Lastly, look at the output and you'll see that many taxa were excluded. Try looking them up in EOL or Wikipedia. Why was it difficult to include them? What does this say about the history of botany? Are there some things that were excluded that should not have been excluded?  
+The taxa that were excluded include Aspicllum, Bangia, Betula, Blasia, Blechnum, Caulerpa, Corallorrhiza, Equisetum, Ficus, Fontinalis, Fossombronia, Fucus, Vitis,  Gleditschia, etc. When I tried to search Aspicllum, I couldn't find anything, which made me think perhaps the spelling of the taxa is incorrect. Bangia is a red algae and according to Wikipedia, their taxonomic identification has been difficult because of a lack of distinct morphological features. Blasia is a liverwort genus, Fontinalis is a genus for a moss species, polytrichum is a genus of mosses. It is interesting that these two byrophytes are not on this phylogentic tree, indicating that it may be difficult to place such organisms on the tree. Since byrophytes are the first primitive plants, they are not related to other plants which makes it difficult to place them in phylogenetic trees. 
+Some things that shouldn't have been excluded were Betula (genus of birch trees), Carollorhiza (genus of flowering plants in orchids), etc. 
+
+# FINAL EXERCISE
+
+For the final exercise, I took the list of species from the Welikia database and the list of plants I used in a day from Portfolio 2. I read the csv files and got the species names so I could form my trees:
+
+```{r}
+welikia_list = read.csv("Welikia.csv")
+used_list = read.csv("24hourplants.csv")
+welikia_species = paste(welikia_list$Scientific_name)
+onedayplants_species = paste(used_list$Scientific_Name)
+
+welikia_species
+onedayplants_species
+```
+
+Then, I formatted the trees as phylogenies using the phylomatic() method and plotted the trees.
+
+```{r}
+welikia <- phylomatic(taxa = welikia_species, get = 'POST')
+plot(welikia, no.margin = TRUE, type="phylogram")
+used <- phylomatic(taxa = onedayplants_species, get = 'POST')
+plot(used, no.margin = TRUE, type="phylogram")
+```
+
+
+To write the trees into a text file, I used the code below. This is an important step because in order to upload my trees to iTOL, I need my trees in textfile form.
+```{r}
+welikia <- phylomatic(taxa = welikia_species, get = 'POST')
+write.tree(welikia, file="Welikia_newick")
+```
+
+```{r}
+used <- phylomatic (taxa=onedayplants_species, get='POST') 
+write.tree(used, file="Usedplants")
+```
+
+Now, I will save my trees in PDF format. 
+```{r}
+welikia_fn = "welikia_tree.pdf"
+pdf(file=welikia_fn)
+plot(welikia, no.margin = TRUE, type="phylogram")
+dev.off()
+cmdstr = paste("open ", welikia_fn, sep="")
+system(cmdstr)
+
+used_fn = "24hourplants_tree.pdf"
+pdf(file=used_fn)
+plot(used, no.margin = TRUE, type="phylogram")
+dev.off()
+cmdstr = paste("open ", used_fn, sep="")
+system(cmdstr)
+```
