@@ -36,7 +36,7 @@ To finish up Mini-Exercise 1, I wrote new code with a new Newick string variable
 
 ```{r}
 new_tree = "(Blueberry, ((Watermelon, Banana), Honey Dew));"
-fruits = read.tree(text=new_tuple)
+fruits = read.tree(text=new_tree)
 plot(fruits)
 ```
 
@@ -90,6 +90,13 @@ See tree below.
 newick_str = "(((Humans, Chimps), Gorillas), (Pongo_abelii, Pongo_tapanuliensis));"
 tr_primates = read.tree(text=newick_str)
 plot(tr_primates)
+```
+
+# Good! You can also add branch lengths like this:
+```{r}
+newick_str = "(((Humans:12.5, Chimps:12.5):1.0, Gorillas:14.0):1.0, (Orang_ abelii:14.5, Orang_tapanuliensis:14.5):3.5);"
+tr_primate = read.tree(text=newick_str)
+plot(tr_primate)
 ```
 
 #MINI EXERCISE 4
@@ -259,3 +266,5 @@ dev.off()
 cmdstr = paste("open ", used_fn, sep="")
 system(cmdstr)
 ```
+
+#  Great job! Everything worked perfectly.
